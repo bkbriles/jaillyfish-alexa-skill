@@ -3,7 +3,9 @@ implements my jaillyfish script with amazon's dot.
 
 todo:
 
-- write aws lambda function
+- implement flask-ask library
+
+- write aws lambda function. using ngrok for now.
 
 - optimize parsing
 
