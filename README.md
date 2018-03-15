@@ -1,11 +1,13 @@
 # jaillyfish-alexa-skill
 implements my jaillyfish script with amazon's dot. 
 
-Features:
+todo:
 
--<i> nothing
+- write aws lambda function
 
-- drop the lxml</i>
+- optimize parsing
+
+- remove debug and test case lines
 
 Python 3 Libraries:
 
@@ -17,4 +19,4 @@ Python 3 Libraries:
     
     pip3 install lxml
 
-
+ 

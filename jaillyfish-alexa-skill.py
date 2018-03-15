@@ -24,7 +24,3 @@ if len(jaillyfish) == 0:
 else:
     for i in range(len(jaillyfish)):
         print(jaillyfish[i])
-
-    
-    # known to work
-    # roster[i].get_text(strip=True)
