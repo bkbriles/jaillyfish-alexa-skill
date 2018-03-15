@@ -21,4 +21,8 @@ Python 3 Libraries:
     
     pip3 install lxml
 
+    pip3 install flask
+
+    pip3 install flask-ask
+
  
