@@ -1,15 +1,16 @@
+#!/usr/bin/env python3
+
 from flask import Flask
-from flask_ask import Ask, statement, question, session
+from flask_ask import Ask, statement, question
 import bs4
 import requests
 
 app = Flask(__name__)
 ask = Ask(app, "/ngrok_testing_env")
 
-
 def jaillyfish():
     url = "http://apps.co.marion.or.us/JailRosters/mccf_roster.html"
-    keywords = ['ACATECA-HERNANDEZ', 'ZIELINSKI'] # TEST CASE
+    keywords = ['ACATECA-HERNANDEZ'] # TEST CASE
     jaillyfish = []
 
     # scrape data from url and convert to type bs4
@@ -24,16 +25,16 @@ def jaillyfish():
         if any(keyword in roster[i].get_text(strip=True) for keyword in keywords):
             jaillyfish.append(roster[i].get_text(strip=True))
             print(roster[i].get_text(strip=True)) #DEBUG
-
-    return len(jaillyfish)
-    '''
+    
     if len(jaillyfish) == 0:
         # no one you know is in jail
-        return 0
+        return "It doesn't look like anyone you know is in Marion County Jail."
+    elif len(jaillyfish) == 1:
+        name = '... '.join(jaillyfish)
+        return "Uh oh. Someone you know is in jail. {} is in Marion County Jail.".format(name)
     else:
-        for i in range(len(jaillyfish)):
-            print(jaillyfish[i])
-    '''
+        name = '... '.join(jaillyfish)
+        return "Uh oh. Some people you know are in jail. {}, are in Marion County Jail.".format(name)
 
 @app.route('/')
 def homepage():
@@ -46,11 +47,7 @@ def start_skill():
 
 @ask.intent("YesIntent")
 def yes_intent():
-    number_in_jail = jaillyfish()
-    if number_in_jail == 0:
-        roster_msg = "It doesn't look like anyone you know is in Marion County Jail."
-    else:
-        roster_msg = 'Uh oh, it looks like people you know are in jail.'
+    roster_msg = jaillyfish()
     return statement(roster_msg)
 
 @ask.intent("NoIntent")
@@ -58,7 +55,5 @@ def no_intent():
     closing_msg = 'Okay, goodbye.'
     return statement(closing_msg)
 
-'''
 if __name__ == '__main__':
     app.run(debug=True)
-'''
